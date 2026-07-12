@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="多头注意力机制介绍 $$ \\operatorname{Attention}(Q, K, V) = \\operatorname{softmax}\\left( \\frac{Q K^\\top}{\\sqrt{d_k}} \\right) V $$ 我们先抛开Q K V三个矩阵不谈，self-Attention最原始的形态长这样 $$ \\operatorname{Softmax}(X X^\\top) X $$ 一个矩阵乘以它">
-<title>多头注意力机制介绍</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Introduction of the Multi Head Self Attention Mechanism $$ \\operatorname{Attention}(Q, K, V) = \\operatorname{softmax}\\left( \\frac{Q K^\\top}{\\sqrt{d_k}} \\right) V $$ Let&rsquo;s first ignore the Q, K, V matrices. The original form of self-Attention looks like this $$ \\operatorname{Softmax}(X X^\\top) X $$ When a matrix is multiplied by its own transpose, it can be regarded as calculating the inner product of these vectors with other vectors. This represents the angle between two vectors and the projection of one vector onto another.">
+<title>Introduction_of_the_Multi Head_Self Attention_Mechanism</title>
 
-<link rel='canonical' href='https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/'>
+<link rel='canonical' href='https://hikaritsai.github.io/en/p/introduction_of_the_multi-head_self-attention_mechanism/'>
 
-<link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="多头注意力机制介绍">
-<meta property='og:description' content="多头注意力机制介绍 $$ \\operatorname{Attention}(Q, K, V) = \\operatorname{softmax}\\left( \\frac{Q K^\\top}{\\sqrt{d_k}} \\right) V $$ 我们先抛开Q K V三个矩阵不谈，self-Attention最原始的形态长这样 $$ \\operatorname{Softmax}(X X^\\top) X $$ 一个矩阵乘以它">
-<meta property='og:url' content='https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/'>
-<meta property='og:site_name' content='HikariTsai(蔡璨阳)'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-07-12T08:41:23&#43;08:00'/><meta property='article:modified_time' content='2026-07-12T08:41:23&#43;08:00'/><meta property='og:image' content='https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/11.jpg' />
-<meta name="twitter:title" content="多头注意力机制介绍">
-<meta name="twitter:description" content="多头注意力机制介绍 $$ \\operatorname{Attention}(Q, K, V) = \\operatorname{softmax}\\left( \\frac{Q K^\\top}{\\sqrt{d_k}} \\right) V $$ 我们先抛开Q K V三个矩阵不谈，self-Attention最原始的形态长这样 $$ \\operatorname{Softmax}(X X^\\top) X $$ 一个矩阵乘以它"><meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="Introduction_of_the_Multi Head_Self Attention_Mechanism">
+<meta property='og:description' content="Introduction of the Multi Head Self Attention Mechanism $$ \\operatorname{Attention}(Q, K, V) = \\operatorname{softmax}\\left( \\frac{Q K^\\top}{\\sqrt{d_k}} \\right) V $$ Let&rsquo;s first ignore the Q, K, V matrices. The original form of self-Attention looks like this $$ \\operatorname{Softmax}(X X^\\top) X $$ When a matrix is multiplied by its own transpose, it can be regarded as calculating the inner product of these vectors with other vectors. This represents the angle between two vectors and the projection of one vector onto another.">
+<meta property='og:url' content='https://hikaritsai.github.io/en/p/introduction_of_the_multi-head_self-attention_mechanism/'>
+<meta property='og:site_name' content='HikariTsai(Cai canyang)'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-07-12T09:01:26&#43;08:00'/><meta property='article:modified_time' content='2026-07-12T09:01:26&#43;08:00'/><meta property='og:image' content='https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/11.jpg' />
+<meta name="twitter:title" content="Introduction_of_the_Multi Head_Self Attention_Mechanism">
+<meta name="twitter:description" content="Introduction of the Multi Head Self Attention Mechanism $$ \\operatorname{Attention}(Q, K, V) = \\operatorname{softmax}\\left( \\frac{Q K^\\top}{\\sqrt{d_k}} \\right) V $$ Let&rsquo;s first ignore the Q, K, V matrices. The original form of self-Attention looks like this $$ \\operatorname{Softmax}(X X^\\top) X $$ When a matrix is multiplied by its own transpose, it can be regarded as calculating the inner product of these vectors with other vectors. This represents the angle between two vectors and the projection of one vector onto another."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/11.jpg' />
   
 
@@ -44,7 +44,7 @@
     })();
 </script>
 <div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
@@ -54,7 +54,7 @@
         
             
             <figure class="site-avatar">
-                <a href="/">
+                <a href="/en/">
                 
                     
                     
@@ -73,7 +73,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">HikariTsai(蔡璨阳)</a></h1>
+            <h1 class="site-name"><a href="/en">HikariTsai(Cai canyang)</a></h1>
             <h2 class="site-description">3282465591@qq.com</h2>
         </div>
     </header><ol class="menu-social">
@@ -123,103 +123,6 @@
         </ol><ol class="menu" id="main-menu">
         
         
-        
-        <li >
-            <a href='/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-</svg>
-
-
-
-                
-                <span>主页</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E5%85%B3%E4%BA%8E/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                
-                <span>关于</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/archives/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
-</svg>
-
-
-
-                
-                <span>归档</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/search/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg>
-
-
-
-                
-                <span>搜索</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
-</svg>
-
-
-
-                
-                <span>友情链接</span>
-            </a>
-        </li>
-        
         <li class="menu-bottom-section">
             <ol class="menu">
                     
@@ -237,9 +140,9 @@
 
                             <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
                                 
-                                    <option value="https://hikaritsai.github.io/en/" >English</option>
+                                    <option value="https://hikaritsai.github.io/en/" selected>English</option>
                                 
-                                    <option value="https://hikaritsai.github.io/" selected>简体中文</option>
+                                    <option value="https://hikaritsai.github.io/" >简体中文</option>
                                 
                             </select>
                         </li>
@@ -264,7 +167,7 @@
 
 
 
-                        <span>暗色模式</span>
+                        <span>Dark Mode</span>
                     </li>
                 
             </ol>
@@ -278,13 +181,13 @@
     <article class="has-image main-article">
     <header class="article-header">
         <div class="article-image">
-            <a href="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/">
+            <a href="/en/p/introduction_of_the_multi-head_self-attention_mechanism/">
                 <img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/11_hu6544076532849701579.jpg"
                         srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/11_hu6544076532849701579.jpg 800w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/11_hu16414151090080879044.jpg 1600w"
                         width="800" 
                         height="450" 
                         loading="lazy"
-                        alt="Featured image of post 多头注意力机制介绍" />
+                        alt="Featured image of post Introduction_of_the_Multi Head_Self Attention_Mechanism" />
                 
             </a>
         </div>
@@ -295,7 +198,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/">多头注意力机制介绍</a>
+            <a href="/en/p/introduction_of_the_multi-head_self-attention_mechanism/">Introduction_of_the_Multi Head_Self Attention_Mechanism</a>
         </h2>
     
         
@@ -340,7 +243,7 @@
 
             <div>
                 
-                    <a href="https://hikaritsai.github.io/en/p/introduction_of_the_multi-head_self-attention_mechanism/" class="link">English</a>
+                    <a href="https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/" class="link">简体中文</a>
                 
             </div>
         </footer>
@@ -352,11 +255,11 @@
     <section class="article-content">
     
     
-    <h1 id="多头注意力机制介绍">多头注意力机制介绍
-</h1><p><img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/000.PNG"
+    <h1 id="introduction-of-the-multi-head-self-attention-mechanism">Introduction of the Multi Head Self Attention Mechanism
+</h1><p><img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/000.PNG"
 	width="1280"
 	height="725"
-	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/000_hu6212519702681689086.PNG 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/000_hu14780617899703101688.PNG 1024w"
+	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/000_hu6212519702681689086.PNG 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/000_hu14780617899703101688.PNG 1024w"
 	loading="lazy"
 	
 	
@@ -364,19 +267,19 @@
 		data-flex-grow="176"
 		data-flex-basis="423px"
 	
-></p>
-<p>$$
+>
+$$
 \operatorname{Attention}(Q, K, V) = \operatorname{softmax}\left( \frac{Q K^\top}{\sqrt{d_k}} \right) V
 $$
-我们先抛开<code>Q</code> <code>K</code> <code>V</code>三个矩阵不谈，self-Attention最原始的形态长这样
+Let&rsquo;s first ignore the Q, K, V matrices. The original form of self-Attention looks like this
 $$
 \operatorname{Softmax}(X X^\top) X
 $$
-一个矩阵乘以它自己的转置，可以看成这些向量分别与其他向量计算内积，这样表征了两个向量的夹角，表征一个向量在另一个向量上的投影。</p>
-<p><img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/001.JPEG"
+When a matrix is multiplied by its own transpose, it can be regarded as calculating the inner product of these vectors with other vectors. This represents the angle between two vectors and the projection of one vector onto another.</p>
+<p><img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/001.JPEG"
 	width="1116"
 	height="389"
-	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/001_hu9216091941071929684.JPEG 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/001_hu9793332211615687714.JPEG 1024w"
+	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/001_hu9216091941071929684.JPEG 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/001_hu9793332211615687714.JPEG 1024w"
 	loading="lazy"
 	
 	
@@ -385,14 +288,14 @@ $$
 		data-flex-basis="688px"
 	
 ></p>
-<p>投影的值大，说明两个向量相关度高。我们考虑如果两个向量夹角是九十度，那么这两个向量线性无关，完全没有相关性，更进一步，这个向量是词向量，是词在高维空间的数值映射。词向量之间相关度高表示是在一定程度上表示，在关注词A的时候，应当给予词B更多的关注，上图展示了一个行向量运算的结果，那么矩阵$$X X^\top$$是一个方阵，我们以行向量的角度理解，里面保存了每个向量与自己和其他向量进行内积运算的结果。
+<p>The larger the projection value is, the higher the correlation between the two vectors is. We consider that if the angle between the two vectors is 90 degrees, then these two vectors are linearly independent and have no correlation at all. Furthermore, this vector is a word vector, which is the numerical mapping of a word in a high-dimensional space. A high correlation between word vectors indicates that to some extent, when focusing on word A, word B should be given more attention. The above figure shows the result of a row vector operation. Then, the matrix $$X X^\top$$ is a square matrix. From the perspective of row vectors, it stores the results of the inner product operation between each vector and itself and other vectors.
 $$
 \operatorname{Softmax}(z_i) = \frac{e^{z_i}}{\sum_{c=1}^{C} e^{z_c}}
 $$
-<img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/002.JPEG"
+<img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/002.JPEG"
 	width="1280"
 	height="550"
-	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/002_hu9703754435565479923.JPEG 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/002_hu7319716007615469585.JPEG 1024w"
+	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/002_hu9703754435565479923.JPEG 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/002_hu7319716007615469585.JPEG 1024w"
 	loading="lazy"
 	
 	
@@ -401,11 +304,11 @@ $$
 		data-flex-basis="558px"
 	
 ></p>
-<p>Softmax操作的意义是归一化，Softmax之后，这些数字的和为1了，Attention机制的核心是加权求和，权重就是这些归一化之后的数字。当我们关注&quot;早&quot;这个字的时候，我们应当分配0.4的注意力给它本身，剩下0.4关注&quot;上&quot;，0.2关注&quot;好&quot;。</p>
-<p><img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/003.jpg"
+<p>The significance of the Softmax operation is normalization. After the Softmax operation, the sum of these numbers becomes 1. The core of the Attention mechanism is weighted summation, and the weights are these normalized numbers. When we focus on the word &ldquo;zao&rdquo;, we should allocate 0.4 of the attention to itself, and the remaining 0.4 should be focused on &ldquo;shang&rdquo;, and 0.2 should be focused on &ldquo;hao&rdquo;.</p>
+<p><img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/003.jpg"
 	width="1126"
 	height="317"
-	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/003_hu2947813276670446463.jpg 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/003_hu12386593987038478917.jpg 1024w"
+	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/003_hu2947813276670446463.jpg 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/003_hu12386593987038478917.jpg 1024w"
 	loading="lazy"
 	
 	
@@ -414,11 +317,11 @@ $$
 		data-flex-basis="852px"
 	
 ></p>
-<p>我们取一个行向量举例。这一行向量与一个列向量相乘，表示这个新的行向量就是&quot;早&quot;字词向量经过注意力机制加权求和之后的表示，意义就是单词之间的相关度。</p>
-<p><img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/004.jpg"
+<p>Let&rsquo;s take a row vector as an example. When this row vector is multiplied by a column vector, it indicates that this new row vector is the representation of the &ldquo;early&rdquo; word vector after being weighted and summed by the attention mechanism. The meaning is the correlation between words.</p>
+<p><img src="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/004.jpg"
 	width="560"
 	height="569"
-	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/004_hu11152654549203434366.jpg 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/004_hu14557521691501491808.jpg 1024w"
+	srcset="/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/004_hu11152654549203434366.jpg 480w, /p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index.en/004_hu14557521691501491808.jpg 1024w"
 	loading="lazy"
 	
 	
@@ -427,9 +330,9 @@ $$
 		data-flex-basis="236px"
 	
 ></p>
-<p><code>Q</code> <code>K</code> <code>V</code>三个矩阵本质上都是X的线性变换,为了提升模型的拟合能力，矩阵W都是可以训练的，起到一个缓冲的效果。</p>
-<p>假设Q,K里的元素的均值为0，方差为1，那么$$A^T = Q^T K$$中元素的均值为0，方差为d. 当d变得很大时，A中的元素的方差也会变得很大，如果A中的元素方差很大，那么$$\operatorname{Softmax}(A)$$的分布会趋于陡峭，即分布的方差大，分布集中在绝对值大的区域。</p>
-<p>就是$$\operatorname{Softmax}(A)$$的分布会和d有关。因此A中每一个元素除以$$\sqrt{d_k}$$后，方差又变为1。这使得$$\operatorname{Softmax}(A)$$的分布“陡峭”程度与d解耦，从而使得训练过程中梯度值保持稳定。</p>
+<p>The three matrices, Q, K, and V, are essentially linear transformations of X. To enhance the model&rsquo;s fitting ability, the matrices W can be trained and serve as a buffer effect.
+Assuming that the mean and variance of the elements in Q and K are both 0 and 1 respectively, then the mean of the elements in $$A^T = Q^T K$$ is 0 and the variance is d. When d becomes very large, the variance of the elements in A will also become very large. If the variance of the elements in A is large, then the distribution of $$\operatorname{Softmax}(A)$$ will tend to be steep, that is, the variance of the distribution is large and the distribution is concentrated in the regions with large absolute values.
+The distribution of $$\operatorname{Softmax}(A)$$ is related to d. Therefore, after each element in A is divided by $$\sqrt{d_k}$$, the variance becomes 1 again. This makes the &ldquo;steepness&rdquo; of the distribution of $$\operatorname{Softmax}(A)$$ decoupled from d, thereby ensuring that the gradient values remain stable during the training process.</p>
 
 </section>
 
@@ -486,8 +389,8 @@ $$
     <section class="powerby">
         
             Hikari <br/>
-        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 

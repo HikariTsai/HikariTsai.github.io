@@ -14,6 +14,72 @@
         
         <guid>https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/</guid>
         <description>&lt;img src="https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/11.jpg" alt="Featured image of post 多头注意力机制介绍" /&gt;&lt;h1 id=&#34;多头注意力机制介绍&#34;&gt;多头注意力机制介绍
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://hikaritsai.github.io/index/000.PNG&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;$$
+\operatorname{Attention}(Q, K, V) = \operatorname{softmax}\left( \frac{Q K^\top}{\sqrt{d_k}} \right) V
+$$
+我们先抛开&lt;code&gt;Q&lt;/code&gt; &lt;code&gt;K&lt;/code&gt; &lt;code&gt;V&lt;/code&gt;三个矩阵不谈，self-Attention最原始的形态长这样
+$$
+\operatorname{Softmax}(X X^\top) X
+$$
+一个矩阵乘以它自己的转置，可以看成这些向量分别与其他向量计算内积，这样表征了两个向量的夹角，表征一个向量在另一个向量上的投影。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://hikaritsai.github.io/index/001.JPEG&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;投影的值大，说明两个向量相关度高。我们考虑如果两个向量夹角是九十度，那么这两个向量线性无关，完全没有相关性，更进一步，这个向量是词向量，是词在高维空间的数值映射。词向量之间相关度高表示是在一定程度上表示，在关注词A的时候，应当给予词B更多的关注，上图展示了一个行向量运算的结果，那么矩阵$$X X^\top$$是一个方阵，我们以行向量的角度理解，里面保存了每个向量与自己和其他向量进行内积运算的结果。
+$$
+\operatorname{Softmax}(z_i) = \frac{e^{z_i}}{\sum_{c=1}^{C} e^{z_c}}
+$$
+&lt;img src=&#34;https://hikaritsai.github.io/index/002.JPEG&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Softmax操作的意义是归一化，Softmax之后，这些数字的和为1了，Attention机制的核心是加权求和，权重就是这些归一化之后的数字。当我们关注&amp;quot;早&amp;quot;这个字的时候，我们应当分配0.4的注意力给它本身，剩下0.4关注&amp;quot;上&amp;quot;，0.2关注&amp;quot;好&amp;quot;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://hikaritsai.github.io/index/003.jpg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们取一个行向量举例。这一行向量与一个列向量相乘，表示这个新的行向量就是&amp;quot;早&amp;quot;字词向量经过注意力机制加权求和之后的表示，意义就是单词之间的相关度。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://hikaritsai.github.io/index/004.jpg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Q&lt;/code&gt; &lt;code&gt;K&lt;/code&gt; &lt;code&gt;V&lt;/code&gt;三个矩阵本质上都是X的线性变换,为了提升模型的拟合能力，矩阵W都是可以训练的，起到一个缓冲的效果。&lt;/p&gt;
+&lt;p&gt;假设Q,K里的元素的均值为0，方差为1，那么$$A^T = Q^T K$$中元素的均值为0，方差为d. 当d变得很大时，A中的元素的方差也会变得很大，如果A中的元素方差很大，那么$$\operatorname{Softmax}(A)$$的分布会趋于陡峭，即分布的方差大，分布集中在绝对值大的区域。&lt;/p&gt;
+&lt;p&gt;就是$$\operatorname{Softmax}(A)$$的分布会和d有关。因此A中每一个元素除以$$\sqrt{d_k}$$后，方差又变为1。这使得$$\operatorname{Softmax}(A)$$的分布“陡峭”程度与d解耦，从而使得训练过程中梯度值保持稳定。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>多头注意力机制介绍</title>
+        <link>https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/</link>
+        <pubDate>Sun, 12 Jul 2026 08:41:23 +0800</pubDate>
+        
+        <guid>https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/</guid>
+        <description>&lt;img src="https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/11.jpg" alt="Featured image of post 多头注意力机制介绍" /&gt;&lt;h1 id=&#34;多头注意力机制介绍&#34;&gt;多头注意力机制介绍
 &lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/000.PNG&#34;
 	width=&#34;1280&#34;
 	height=&#34;725&#34;

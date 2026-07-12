@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>HikariTsai(Cai canyang)</title>
-        <link>https://hikaritsai.github.io/en/</link>
-        <description>Recent content on HikariTsai(Cai canyang)</description>
+        <title>Posts on HikariTsai(Cai canyang)</title>
+        <link>https://hikaritsai.github.io/en/post/</link>
+        <description>Recent content in Posts on HikariTsai(Cai canyang)</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>HikariTsai(Cai canyang/蔡璨阳)</copyright>
-        <lastBuildDate>Sun, 12 Jul 2026 09:01:26 +0800</lastBuildDate><atom:link href="https://hikaritsai.github.io/en/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 12 Jul 2026 09:01:26 +0800</lastBuildDate><atom:link href="https://hikaritsai.github.io/en/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Introduction_of_the_Multi Head_Self Attention_Mechanism</title>
         <link>https://hikaritsai.github.io/en/p/introduction_of_the_multi-head_self-attention_mechanism/</link>
         <pubDate>Sun, 12 Jul 2026 09:01:26 +0800</pubDate>
