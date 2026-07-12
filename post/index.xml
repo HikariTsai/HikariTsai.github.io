@@ -13,8 +13,20 @@
         <pubDate>Sun, 12 Jul 2026 08:41:23 +0800</pubDate>
         
         <guid>https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/</guid>
-        <description>&lt;h1 id=&#34;多头注意力机制介绍&#34;&gt;多头注意力机制介绍
-&lt;/h1&gt;&lt;p&gt;$$
+        <description>&lt;img src="https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/11.jpg" alt="Featured image of post 多头注意力机制介绍" /&gt;&lt;h1 id=&#34;多头注意力机制介绍&#34;&gt;多头注意力机制介绍
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/000.PNG&#34;
+	width=&#34;1280&#34;
+	height=&#34;725&#34;
+	srcset=&#34;https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/000_hu6212519702681689086.PNG 480w, https://hikaritsai.github.io/p/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D/index/000_hu14780617899703101688.PNG 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;176&#34;
+		data-flex-basis=&#34;423px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;$$
 \operatorname{Attention}(Q, K, V) = \operatorname{softmax}\left( \frac{Q K^\top}{\sqrt{d_k}} \right) V
 $$
 我们先抛开&lt;code&gt;Q&lt;/code&gt; &lt;code&gt;K&lt;/code&gt; &lt;code&gt;V&lt;/code&gt;三个矩阵不谈，self-Attention最原始的形态长这样
