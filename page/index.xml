@@ -21,7 +21,19 @@
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://hikaritsai.github.io/%E5%85%B3%E4%BA%8E/</guid>
-        <description>&lt;p&gt;This is a test page for i18n support.&lt;/p&gt;
+        <description>&lt;h2 id=&#34;关于我&#34;&gt;关于我
+&lt;/h2&gt;&lt;p&gt;蔡璨阳&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;本科&lt;/strong&gt;									     &lt;strong&gt;成都信息工程大学									网络空间安全&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;学业成绩与综合成绩&#34;&gt;学业成绩与综合成绩
+&lt;/h2&gt;&lt;p&gt;GPA:&lt;strong&gt;3.22/5&lt;/strong&gt;								 算术平均分：83.6           						          加权平均分82.21&lt;/p&gt;
+&lt;p&gt;分数排名:27/159					 	       成绩排名占比：17%&lt;/p&gt;
+&lt;p&gt;综合排名:19/159							综合排名占比：11%&lt;/p&gt;
+&lt;p&gt;获得学业三等奖学金&lt;/p&gt;
+&lt;h2 id=&#34;项目与竞赛经历&#34;&gt;项目与竞赛经历
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;2025数维杯国际大学生数学建模竞赛&lt;/strong&gt;		  		队长										H奖&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第十六届蓝桥杯全国软件与信息技术专业人才大赛&lt;/strong&gt;												   省级三等奖&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第十三届全国大学生数字媒体科技作品及创意竞赛&lt;/strong&gt;	    骨干成员									省级三等奖&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;基于RoBERTa和SBERT的方面级旅游智能推荐系统&lt;/strong&gt;	   第一著作权人								软件著作权&lt;/p&gt;
 </description>
         </item>
         <item>
